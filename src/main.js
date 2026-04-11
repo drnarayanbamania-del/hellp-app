@@ -26,6 +26,23 @@ const state = {
 async function init() {
   renderLoading()
 
+  // Handle OAuth callback (insforge_code in URL after Google/GitHub redirect)
+  const urlParams = new URLSearchParams(window.location.search)
+  const oauthCode = urlParams.get('insforge_code')
+  if (oauthCode) {
+    // Clean URL without reloading
+    window.history.replaceState({}, document.title, window.location.pathname)
+    try {
+      const { data, error } = await insforge.auth.exchangeOAuthCode(oauthCode)
+      if (!error && data?.user) {
+        state.currentUser = data.user
+        await createProfileIfNeeded(data.user.name || data.user.email?.split('@')[0] || 'User')
+        renderApp()
+        return
+      }
+    } catch {}
+  }
+
   try {
     const { data } = await insforge.auth.getCurrentUser()
     if (data?.user) {
@@ -284,7 +301,6 @@ window.handleResendCode = async (email) => {
 }
 
 window.handleOAuth = async (provider) => {
-  // Find the clicked button and show loading state
   const buttons = document.querySelectorAll('.btn-oauth')
   const btn = [...buttons].find(b => b.textContent.toLowerCase().includes(provider))
   const originalHTML = btn?.innerHTML
@@ -295,7 +311,7 @@ window.handleOAuth = async (provider) => {
   }
 
   try {
-    const { error } = await insforge.auth.signInWithOAuth({
+    const { data, error } = await insforge.auth.signInWithOAuth({
       provider,
       redirectTo: window.location.origin,
     })
@@ -303,8 +319,16 @@ window.handleOAuth = async (provider) => {
     if (error) {
       showToast(`${provider} sign-in failed: ${error.message || 'Please try again.'}`, 'error')
       if (btn) { btn.disabled = false; btn.innerHTML = originalHTML }
+      return
     }
-    // On success, insforge redirects the browser — no need to do anything else
+
+    // SDK returns the OAuth URL — redirect the browser to it
+    if (data?.url) {
+      window.location.href = data.url
+    } else {
+      showToast(`Could not get ${provider} sign-in URL. Please try again.`, 'error')
+      if (btn) { btn.disabled = false; btn.innerHTML = originalHTML }
+    }
   } catch (err) {
     showToast(`Could not connect to ${provider}. Please try again.`, 'error')
     if (btn) { btn.disabled = false; btn.innerHTML = originalHTML }
