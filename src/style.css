@@ -1,5 +1,5 @@
 /* ==========================================
-   WhatsApp Clone - Premium CSS Design System
+   Hello App - Premium CSS Design System
    ========================================== */
 
 *, *::before, *::after {
@@ -9,27 +9,27 @@
 }
 
 :root {
-  /* WhatsApp Brand Colors */
-  --wa-green: #00a884;
-  --wa-green-dark: #008069;
-  --wa-green-light: #d9fdd3;
-  --wa-green-icon: #54d3c2;
-  --wa-bg: #111b21;
-  --wa-bg-secondary: #202c33;
-  --wa-bg-tertiary: #2a3942;
-  --wa-bg-input: #2a3942;
-  --wa-border: #313d45;
-  --wa-text: #e9edef;
-  --wa-text-secondary: #8696a0;
-  --wa-text-tertiary: #667781;
-  --wa-bubble-out: #005c4b;
-  --wa-bubble-in: #202c33;
-  --wa-hover: #2a3942;
-  --wa-active: #3e5059;
-  --wa-badge: #00a884;
-  --wa-header: #202c33;
-  --wa-panel: #111b21;
-  --wa-divider: #1f2c34;
+  /* Hello App Brand Colors - Blue Theme */
+  --wa-green: #2563eb;
+  --wa-green-dark: #1d4ed8;
+  --wa-green-light: #dbeafe;
+  --wa-green-icon: #60a5fa;
+  --wa-bg: #0f172a;
+  --wa-bg-secondary: #1e293b;
+  --wa-bg-tertiary: #263348;
+  --wa-bg-input: #263348;
+  --wa-border: #334155;
+  --wa-text: #e2e8f0;
+  --wa-text-secondary: #94a3b8;
+  --wa-text-tertiary: #64748b;
+  --wa-bubble-out: #1e3a8a;
+  --wa-bubble-in: #1e293b;
+  --wa-hover: #263348;
+  --wa-active: #2d4a6e;
+  --wa-badge: #2563eb;
+  --wa-header: #1e293b;
+  --wa-panel: #0f172a;
+  --wa-divider: #1a2840;
 
   /* Spacing */
   --spacing-xs: 4px;
@@ -77,7 +77,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #0a1014;
+  background: #080e1a;
 }
 
 /* ========================================
@@ -103,7 +103,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #0a1014 0%, #111b21 50%, #0d2028 100%);
+  background: linear-gradient(135deg, #080e1a 0%, #0f172a 50%, #0a1428 100%);
   position: relative;
   overflow: hidden;
 }
@@ -112,7 +112,7 @@ html, body {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,168,132,0.12) 0%, transparent 70%);
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37,99,235,0.15) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -142,13 +142,13 @@ html, body {
 .auth-logo-icon {
   width: 72px;
   height: 72px;
-  background: linear-gradient(135deg, var(--wa-green) 0%, var(--wa-green-dark) 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, var(--wa-green-dark) 100%);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 16px;
-  box-shadow: 0 0 30px rgba(0,168,132,0.3);
+  box-shadow: 0 0 30px rgba(37,99,235,0.4);
 }
 
 .auth-logo-icon svg {
@@ -195,7 +195,7 @@ html, body {
 .auth-tab.active {
   background: var(--wa-green);
   color: white;
-  box-shadow: 0 2px 8px rgba(0,168,132,0.4);
+  box-shadow: 0 2px 8px rgba(37,99,235,0.4);
 }
 
 .auth-form {
@@ -235,7 +235,7 @@ html, body {
 
 .form-input:focus {
   border-color: var(--wa-green);
-  box-shadow: 0 0 0 3px rgba(0,168,132,0.15);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
 }
 
 .form-input.error { border-color: #ff4444; }
@@ -262,13 +262,13 @@ html, body {
   font-family: var(--font-family);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,168,132,0.3);
+  box-shadow: 0 4px 12px rgba(37,99,235,0.35);
   width: 100%;
 }
 
 .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(0,168,132,0.4);
+  box-shadow: 0 6px 18px rgba(37,99,235,0.45);
   filter: brightness(1.08);
 }
 
@@ -358,7 +358,7 @@ html, body {
 
 .verify-digit:focus {
   border-color: var(--wa-green);
-  box-shadow: 0 0 0 3px rgba(0,168,132,0.15);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
 }
 
 /* ========================================
@@ -583,14 +583,14 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 16px rgba(0,168,132,0.4);
+  box-shadow: 0 4px 16px rgba(37,99,235,0.45);
   transition: all var(--transition);
   z-index: 5;
 }
 
 .new-chat-btn:hover {
   transform: scale(1.08) rotate(5deg);
-  box-shadow: 0 6px 20px rgba(0,168,132,0.5);
+  box-shadow: 0 6px 20px rgba(37,99,235,0.55);
 }
 
 /* Empty State */
@@ -793,7 +793,7 @@ html, body {
 }
 
 .input-wrapper:focus-within {
-  border-color: rgba(0,168,132,0.3);
+  border-color: rgba(37,99,235,0.35);
 }
 
 .emoji-btn {
