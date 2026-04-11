@@ -1,9 +1,12 @@
 // SVG Icons for Hello App
 export const icons = {
   whatsapp: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="white">
-    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle"
-      font-family="'Inter', 'Arial Black', sans-serif"
-      font-size="15" font-weight="800" fill="white">B</text>
+    <!-- Speech bubble shape like WhatsApp -->
+    <path d="M12 1C5.925 1 1 5.925 1 12c0 1.89.476 3.665 1.314 5.215L1.05 22.05a.75.75 0 0 0 .916.916l4.835-1.264A10.95 10.95 0 0 0 12 23c6.075 0 11-4.925 11-11S18.075 1 12 1z"/>
+    <!-- Bold B letter on top -->
+    <text x="12" y="16.5" dominant-baseline="auto" text-anchor="middle"
+      font-family="'Arial Black', 'Inter', sans-serif"
+      font-size="11" font-weight="900" fill="#2563eb">B</text>
   </svg>`,
 
   send: `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
