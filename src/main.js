@@ -310,28 +310,36 @@ window.handleOAuth = async (provider) => {
     btn.innerHTML = `<div class="spinner" style="width:16px;height:16px;border-width:2px;margin:0 auto;"></div> Connecting...`
   }
 
-  try {
-    const { data, error } = await insforge.auth.signInWithOAuth({
-      provider,
-      redirectTo: window.location.origin,
-    })
+  // Retry up to 2 times for intermittent backend slowness
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      const { data, error } = await insforge.auth.signInWithOAuth({
+        provider,
+        redirectTo: window.location.origin,
+      })
 
-    if (error) {
-      showToast(`${provider} sign-in failed: ${error.message || 'Please try again.'}`, 'error')
-      if (btn) { btn.disabled = false; btn.innerHTML = originalHTML }
-      return
-    }
+      if (error) {
+        if (attempt < 2) continue // retry
+        showToast(`${provider} sign-in failed: ${error.message || 'Please try again.'}`, 'error')
+        if (btn) { btn.disabled = false; btn.innerHTML = originalHTML }
+        return
+      }
 
-    // SDK returns the OAuth URL — redirect the browser to it
-    if (data?.url) {
-      window.location.href = data.url
-    } else {
+      if (data?.url) {
+        window.location.href = data.url
+        return
+      }
+
+      if (attempt < 2) continue // retry if no URL returned
       showToast(`Could not get ${provider} sign-in URL. Please try again.`, 'error')
       if (btn) { btn.disabled = false; btn.innerHTML = originalHTML }
+      return
+
+    } catch (err) {
+      if (attempt < 2) continue // retry on exception
+      showToast(`Could not connect to ${provider}. Please try again.`, 'error')
+      if (btn) { btn.disabled = false; btn.innerHTML = originalHTML }
     }
-  } catch (err) {
-    showToast(`Could not connect to ${provider}. Please try again.`, 'error')
-    if (btn) { btn.disabled = false; btn.innerHTML = originalHTML }
   }
 }
 
