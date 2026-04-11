@@ -1,4 +1,4 @@
-// WhatsApp Clone - Main Application
+// Hello App - Main Application
 import insforge from './insforge.js'
 import { icons } from './icons.js'
 import {
@@ -63,7 +63,7 @@ function renderAuth(mode = 'login') {
           <div class="auth-logo-icon">
             ${icons.whatsapp}
           </div>
-          <h1>WhatsApp</h1>
+          <h1>Hello App</h1>
           <p>Simple. Reliable. Private.</p>
         </div>
 
@@ -393,8 +393,8 @@ function renderWelcomeScreen() {
   return `
     <div class="welcome-screen">
       <div class="welcome-icon">${icons.chat}</div>
-      <h2>WhatsApp Web</h2>
-      <p>Send and receive messages without keeping your phone online. Use WhatsApp on up to 4 linked devices and 1 phone at the same time.</p>
+      <h2>Hello App</h2>
+      <p>Send and receive messages without keeping your phone online. Use Hello App on up to 4 linked devices and 1 phone at the same time.</p>
       <div class="lock-info">
         ${icons.lock}
         Your personal messages are end-to-end encrypted
