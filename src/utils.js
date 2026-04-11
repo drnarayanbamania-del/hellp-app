@@ -1,7 +1,7 @@
-// Utility functions for WhatsApp Clone
+// Utility functions for Hello App
 
 /**
- * Format timestamp to WhatsApp-style time strings
+ * Format timestamp to Hello App-style time strings
  */
 export function formatTime(timestamp) {
   if (!timestamp) return ''

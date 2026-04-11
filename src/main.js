@@ -64,7 +64,7 @@ function renderAuth(mode = 'login') {
             ${icons.whatsapp}
           </div>
           <h1>Hello App</h1>
-          <p>Simple. Reliable. Private.</p>
+          <p>Connect. Share. Belong.</p>
         </div>
 
         <div class="auth-tabs">
@@ -397,7 +397,7 @@ function renderWelcomeScreen() {
       <p>Send and receive messages without keeping your phone online. Use Hello App on up to 4 linked devices and 1 phone at the same time.</p>
       <div class="lock-info">
         ${icons.lock}
-        Your personal messages are end-to-end encrypted
+        Your messages are secured with Hello App
       </div>
     </div>
   `
