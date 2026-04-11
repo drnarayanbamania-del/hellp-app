@@ -284,10 +284,31 @@ window.handleResendCode = async (email) => {
 }
 
 window.handleOAuth = async (provider) => {
-  await insforge.auth.signInWithOAuth({
-    provider,
-    redirectTo: window.location.origin,
-  })
+  // Find the clicked button and show loading state
+  const buttons = document.querySelectorAll('.btn-oauth')
+  const btn = [...buttons].find(b => b.textContent.toLowerCase().includes(provider))
+  const originalHTML = btn?.innerHTML
+
+  if (btn) {
+    btn.disabled = true
+    btn.innerHTML = `<div class="spinner" style="width:16px;height:16px;border-width:2px;margin:0 auto;"></div> Connecting...`
+  }
+
+  try {
+    const { error } = await insforge.auth.signInWithOAuth({
+      provider,
+      redirectTo: window.location.origin,
+    })
+
+    if (error) {
+      showToast(`${provider} sign-in failed: ${error.message || 'Please try again.'}`, 'error')
+      if (btn) { btn.disabled = false; btn.innerHTML = originalHTML }
+    }
+    // On success, insforge redirects the browser — no need to do anything else
+  } catch (err) {
+    showToast(`Could not connect to ${provider}. Please try again.`, 'error')
+    if (btn) { btn.disabled = false; btn.innerHTML = originalHTML }
+  }
 }
 
 // =============================================
