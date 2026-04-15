@@ -559,6 +559,8 @@ window.openConversation = async (convId) => {
   if (state.isMobile) {
     document.getElementById('sidebar')?.classList.add('hidden')
     document.getElementById('chat-window')?.classList.add('visible')
+    // Support browser back button on mobile
+    window.history.pushState({ conversationOpen: true }, '', `#chat-${convId}`)
   }
 
   // Highlight active chat
@@ -620,10 +622,14 @@ window.openConversation = async (convId) => {
   document.getElementById('chat-input')?.focus()
 }
 
-window.goBackToSidebar = () => {
+window.goBackToSidebar = (triggerHistory = true) => {
   document.getElementById('sidebar')?.classList.remove('hidden')
   document.getElementById('chat-window')?.classList.remove('visible')
   state.activeConversation = null
+  
+  if (triggerHistory && window.location.hash.startsWith('#chat-')) {
+    window.history.replaceState(null, '', window.location.pathname)
+  }
 }
 
 // =============================================
@@ -1044,16 +1050,25 @@ window.handleSignOut = async () => {
 // RESPONSIVE RESIZE
 // =============================================
 function setupResizeListener() {
-  window.addEventListener('resize', () => {
+  window.addEventListener('resize', debounce(() => {
     const wasMobile = state.isMobile
     state.isMobile = window.innerWidth <= 768
 
     if (wasMobile !== state.isMobile) {
       // Reset mobile panels when switching breakpoint
-      document.getElementById('sidebar')?.classList.remove('hidden')
       if (!state.isMobile) {
+        document.getElementById('sidebar')?.classList.remove('hidden')
         document.getElementById('chat-window')?.classList.remove('visible')
+      } else if (state.activeConversation) {
+        document.getElementById('sidebar')?.classList.add('hidden')
+        document.getElementById('chat-window')?.classList.add('visible')
       }
+    }
+  }, 100))
+
+  window.addEventListener('popstate', (e) => {
+    if (state.isMobile && state.activeConversation) {
+      goBackToSidebar(false)
     }
   })
 }
