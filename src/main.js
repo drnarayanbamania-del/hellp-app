@@ -313,19 +313,26 @@ window.handleOAuth = async (provider) => {
   // Retry up to 2 times for intermittent backend slowness
   for (let attempt = 1; attempt <= 2; attempt++) {
     try {
+      console.log(`[OAuth] Attempt ${attempt} for ${provider}`)
       const { data, error } = await insforge.auth.signInWithOAuth({
         provider,
         redirectTo: window.location.origin,
       })
 
+      console.log(`[OAuth] Response:`, { data, error })
+
       if (error) {
-        if (attempt < 2) continue // retry
+        if (attempt < 2) {
+          console.warn(`[OAuth] Error on attempt ${attempt}, retrying...`, error)
+          continue
+        }
         showToast(`${provider} sign-in failed: ${error.message || 'Please try again.'}`, 'error')
         if (btn) { btn.disabled = false; btn.innerHTML = originalHTML }
         return
       }
 
       if (data?.url) {
+        console.log(`[OAuth] Redirecting to: ${data.url}`)
         window.location.href = data.url
         return
       }
@@ -336,9 +343,11 @@ window.handleOAuth = async (provider) => {
       return
 
     } catch (err) {
-      if (attempt < 2) continue // retry on exception
+      console.error(`[OAuth] Exception on attempt ${attempt}:`, err)
+      if (attempt < 2) continue 
       showToast(`Could not connect to ${provider}. Please try again.`, 'error')
       if (btn) { btn.disabled = false; btn.innerHTML = originalHTML }
+    }
     }
   }
 }
