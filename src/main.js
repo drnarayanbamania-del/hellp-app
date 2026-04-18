@@ -113,10 +113,10 @@ function renderLoginForm(error = '') {
 
       <div class="divider">or continue with</div>
       <div class="oauth-btns">
-        <button type="button" class="btn-oauth" onclick="handleOAuth('google')">
+        <button type="button" class="btn-oauth google-btn" onclick="handleOAuth('google')">
           ${icons.google} Google
         </button>
-        <button type="button" class="btn-oauth" onclick="handleOAuth('github')">
+        <button type="button" class="btn-oauth github-btn" onclick="handleOAuth('github')">
           ${icons.github} GitHub
         </button>
       </div>
@@ -307,7 +307,8 @@ window.handleOAuth = async (provider) => {
 
   if (btn) {
     btn.disabled = true
-    btn.innerHTML = `<div class="spinner" style="width:16px;height:16px;border-width:2px;margin:0 auto;"></div> Connecting...`
+    btn.classList.add('loading')
+    btn.innerHTML = `<div class="spinner" style="width:16px;height:16px;border-width:2px;margin-right:8px;display:inline-block;vertical-align:middle;"></div> Connecting...`
   }
 
   // Retry up to 2 times for intermittent backend slowness
@@ -347,7 +348,6 @@ window.handleOAuth = async (provider) => {
       if (attempt < 2) continue 
       showToast(`Could not connect to ${provider}. Please try again.`, 'error')
       if (btn) { btn.disabled = false; btn.innerHTML = originalHTML }
-    }
     }
   }
 }

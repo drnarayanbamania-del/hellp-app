@@ -99,21 +99,29 @@ html, body {
    ======================================== */
 .auth-container {
   width: 100%;
-  height: 100dvh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #080e1a 0%, #0f172a 50%, #0a1428 100%);
+  background: linear-gradient(-45deg, #080e1a, #0f172a, #1e3a8a, #0a1428);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
   position: relative;
-  overflow: hidden;
-  padding: 16px;
+  padding: 24px 16px;
+  overflow-y: auto;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .auth-container::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37,99,235,0.15) 0%, transparent 70%);
+  background: radial-gradient(circle at 50% 0%, rgba(37,99,235,0.1) 0%, transparent 75%);
   pointer-events: none;
 }
 
@@ -128,6 +136,18 @@ html, body {
   position: relative;
   backdrop-filter: blur(20px);
   animation: cardIn 0.4s ease;
+  z-index: 10;
+}
+
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 32px 24px;
+    border-radius: var(--radius-lg);
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
 }
 
 @keyframes cardIn {
@@ -314,9 +334,12 @@ html, body {
 @media (max-width: 480px) {
   .oauth-btns {
     flex-direction: column;
+    gap: 12px;
   }
   .btn-oauth {
     width: 100%;
+    padding: 14px;
+    font-size: 15px;
   }
 }
 
@@ -325,7 +348,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   padding: 12px;
   background: var(--wa-bg-tertiary);
   border: 1px solid var(--wa-border);
@@ -336,11 +359,46 @@ html, body {
   cursor: pointer;
   transition: all var(--transition);
   font-family: var(--font-family);
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-oauth:hover {
   background: var(--wa-hover);
-  border-color: var(--wa-green);
+  border-color: var(--wa-green-icon);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.btn-oauth:active {
+  transform: translateY(0);
+}
+
+.btn-oauth svg {
+  flex-shrink: 0;
+}
+
+.btn-oauth.google-btn {
+  background: white;
+  color: #3c4043;
+  border: 1px solid #dadce0;
+}
+
+.btn-oauth.google-btn:hover {
+  background: #f8f9fa;
+  border-color: #d2d2d2;
+  box-shadow: 0 1px 2px 0 rgba(60,64,67,0.30), 0 1px 3px 1px rgba(60,64,67,0.15);
+}
+
+.btn-oauth.github-btn {
+  background: #24292e;
+  color: white;
+  border-color: #444;
+}
+
+.btn-oauth.github-btn:hover {
+  background: #2c3238;
+  border-color: #555;
 }
 
 .verify-container {
